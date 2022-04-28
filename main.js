@@ -44,7 +44,7 @@ function outer() {
 function sum(a, b, c) {
   return a + b + c;
 }
-console.log(sum(2, 3, 5));
+// console.log(sum(2, 3, 5));
 
 function curry(fn) {
   return function (a) {
@@ -58,10 +58,59 @@ function curry(fn) {
 
 const curriedSum = curry(sum);
 
-console.log(curriedSum(2)(3)(5));
+// console.log(curriedSum(2)(3)(5));
 
 const add2 = curriedSum(2);
 const add3 = add2(3);
 const add5 = add3(5);
 
-console.log(add5);
+// console.log(add5);
+
+/* this
+  the javascript this keyword which is used in a function, refer to the object it belongs to
+  it makes functions reusable by letting you decide the object value
+  this value is determined entirely by how a function is called
+  order of precedence
+    -new binding
+    -explicit binding
+    -implicit binding
+    -default binding
+
+*/
+
+
+
+//implicit binding
+
+const person = {
+  name : 'liono',
+  sayMyName : function() {
+    console.log(`My name is ${this.name}`)
+  }
+}
+
+// person.sayMyName();
+
+
+//explicit binding 
+
+function sayMyName(){
+    console.log(`My name is ${this.name}`);
+}
+
+// sayMyName.call(person);
+
+//new binding
+
+function Person(name){
+  this.name = name;
+}
+
+const p1 = new Person('liono');
+const p2 = new Person('tygra');
+
+// console.log(p1.name,p2.name);
+
+//default binding
+globalThis.name = 'cheetara';
+sayMyName();
