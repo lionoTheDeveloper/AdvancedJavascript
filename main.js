@@ -1,4 +1,3 @@
-
 //nested function scope
 
 // let a = 10;
@@ -23,16 +22,46 @@
  of the function and its scope chain is what is called a closure in javascript.
 
 */
-function outer(){
-    let counter = 0;
-    function inner(){
-        counter++;
-        console.log(counter);
-    }
-    return inner
+function outer() {
+  let counter = 0;
+  function inner() {
+    counter++;
+    console.log(counter);
+  }
+  return inner;
 }
-const fn = outer();
-fn();
-fn();
+// const fn = outer();
+// fn();
+// fn();
 
 //function currying
+
+/* 
+    currying is a process in functional programming in which we transform a function with multiple 
+    arguments into a sequence of nested functions that take one argument at a time.
+
+*/
+function sum(a, b, c) {
+  return a + b + c;
+}
+console.log(sum(2, 3, 5));
+
+function curry(fn) {
+  return function (a) {
+    return function (b) {
+      return function (c) {
+          return fn(a,b,c);
+      };
+    };
+  };
+}
+
+const curriedSum = curry(sum);
+
+console.log(curriedSum(2)(3)(5));
+
+const add2 = curriedSum(2);
+const add3 = add2(3);
+const add5 = add3(5);
+
+console.log(add5);
