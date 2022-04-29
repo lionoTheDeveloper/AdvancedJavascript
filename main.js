@@ -159,5 +159,47 @@ SuperHero.prototype.fightCrime = function(){
 
 const batman = new SuperHero('Bruce','Wayne');
 
-console.log(batman.getFullName());
-batman.fightCrime();
+// console.log(batman.getFullName());
+// batman.fightCrime();
+
+/*
+ 
+  class
+
+*/
+class ClassPerson {
+
+  constructor(fName,lName){
+    this.firstName = fName;
+    this.lastName = lName;
+  }
+
+  sayMyName() {
+     
+    return `${this.firstName} ${this.lastName}`
+ 
+  }
+
+}
+
+// const classPerson1 = new ClassPerson('Bruce', 'Wayne');
+
+// console.log(classPerson1.sayMyName());
+
+class ClassSuperHero extends ClassPerson  {
+
+  constructor(fName,lName){
+    super(fName,lName);
+    this.isSuperHero = true;
+  }
+
+  fightCrime(){
+    console.log("fighting crime")
+  }
+
+}
+
+const classBatman = new ClassSuperHero('Bruce','Wayne');
+console.log(classBatman.sayMyName());
+classBatman.fightCrime();
+
