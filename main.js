@@ -161,3 +161,5 @@ const batman = new SuperHero('Bruce','Wayne');
 
 console.log(batman.getFullName());
 batman.fightCrime();
+
+console.log('hello');
