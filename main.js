@@ -50,7 +50,7 @@ function curry(fn) {
   return function (a) {
     return function (b) {
       return function (c) {
-          return fn(a,b,c);
+        return fn(a, b, c);
       };
     };
   };
@@ -78,39 +78,86 @@ const add5 = add3(5);
 
 */
 
-
-
 //implicit binding
 
 const person = {
-  name : 'liono',
-  sayMyName : function() {
-    console.log(`My name is ${this.name}`)
-  }
-}
+  name: "liono",
+  sayMyName: function () {
+    console.log(`My name is ${this.name}`);
+  },
+};
 
 // person.sayMyName();
 
+//explicit binding
 
-//explicit binding 
-
-function sayMyName(){
-    console.log(`My name is ${this.name}`);
+function sayMyName() {
+  console.log(`My name is ${this.name}`);
 }
 
 // sayMyName.call(person);
 
 //new binding
 
-function Person(name){
+function Person(name) {
   this.name = name;
 }
 
-const p1 = new Person('liono');
-const p2 = new Person('tygra');
+const p1 = new Person("liono");
+const p2 = new Person("tygra");
 
 // console.log(p1.name,p2.name);
 
 //default binding
-globalThis.name = 'cheetara';
-sayMyName();
+globalThis.name = "cheetara";
+// sayMyName();
+
+/*prototype
+
+*/
+
+function Person(fName, lName) {
+  this.firstName = fName;
+  this.lastName = lName;
+}
+
+const person1 = new Person("Bruce", "Wayne");
+const person2 = new Person("Peter", "Parker");
+
+// person1.getFullName = function(){
+//   return `${this.firstName} ${this.lastName}`
+// }
+
+// console.log(person1.getFullName());
+// console.log(person2.getFullName());
+
+Person.prototype.getFullName = function () {
+  return `${this.firstName} ${this.lastName}`;
+};
+
+// console.log(person1.getFullName());
+// console.log(person2.getFullName());
+
+/*
+ prototypal inheritance
+*/
+
+function SuperHero(fName,lName){
+  Person.call(this,fName,lName);
+  this.isSuperHero = true;
+}
+
+
+
+SuperHero.prototype = Object.create(Person.prototype);
+
+SuperHero.prototype.constructor = SuperHero;
+
+SuperHero.prototype.fightCrime = function(){
+  console.log('fighting crime');
+}
+
+const batman = new SuperHero('Bruce','Wayne');
+
+console.log(batman.getFullName());
+batman.fightCrime();
