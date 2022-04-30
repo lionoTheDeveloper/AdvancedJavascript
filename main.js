@@ -142,22 +142,20 @@ Person.prototype.getFullName = function () {
  prototypal inheritance
 */
 
-function SuperHero(fName,lName){
-  Person.call(this,fName,lName);
+function SuperHero(fName, lName) {
+  Person.call(this, fName, lName);
   this.isSuperHero = true;
 }
-
-
 
 SuperHero.prototype = Object.create(Person.prototype);
 
 SuperHero.prototype.constructor = SuperHero;
 
-SuperHero.prototype.fightCrime = function(){
-  console.log('fighting crime');
-}
+SuperHero.prototype.fightCrime = function () {
+  console.log("fighting crime");
+};
 
-const batman = new SuperHero('Bruce','Wayne');
+const batman = new SuperHero("Bruce", "Wayne");
 
 // console.log(batman.getFullName());
 // batman.fightCrime();
@@ -168,38 +166,102 @@ const batman = new SuperHero('Bruce','Wayne');
 
 */
 class ClassPerson {
-
-  constructor(fName,lName){
+  constructor(fName, lName) {
     this.firstName = fName;
     this.lastName = lName;
   }
 
   sayMyName() {
-     
-    return `${this.firstName} ${this.lastName}`
- 
+    return `${this.firstName} ${this.lastName}`;
   }
-
 }
 
 // const classPerson1 = new ClassPerson('Bruce', 'Wayne');
 
 // console.log(classPerson1.sayMyName());
 
-class ClassSuperHero extends ClassPerson  {
-
-  constructor(fName,lName){
-    super(fName,lName);
+class ClassSuperHero extends ClassPerson {
+  constructor(fName, lName) {
+    super(fName, lName);
     this.isSuperHero = true;
   }
 
-  fightCrime(){
-    console.log("fighting crime")
+  fightCrime() {
+    console.log("fighting crime");
   }
-
 }
 
-const classBatman = new ClassSuperHero('Bruce','Wayne');
-console.log(classBatman.sayMyName());
-classBatman.fightCrime();
+const classBatman = new ClassSuperHero("Bruce", "Wayne");
+// console.log(classBatman.sayMyName());
+// classBatman.fightCrime();
 
+/*
+  iterables and iterators 
+  why
+    1-difficulty in accessing the element
+    2-difficult to manage iteration on the data for various types of data structures
+
+  there was a need to iterate over various data structures in a new way that abstracts away the complexity of 
+  accessing elements one by one and was at the same time uniform across the different data structures
+*/
+
+const str = "lionothedeveloper";
+
+for (let i = 0; i < str.length; i++) {
+  // console.log(str.charAt(i));
+}
+
+const arr = ["l", "i", "o", "n", "o"];
+
+for (let i = 0; i < arr.length; i++) {
+  // console.log(arr[i]);
+}
+
+//for..of loop
+
+for (const char of str) {
+  // console.log(char);
+}
+
+for (const item of arr) {
+  // console.log(item);
+}
+
+/*
+  ...iterables and iterators 
+   
+  an object which implements the iterable protocol is called iterable
+  
+  for an object to be an iterable it must implement a method at the key [Symbol.iterator]
+  that method should not accept any argument and should return an object which conforms to the iterator protocol
+
+  the iterator protocol decides whether an object is an iterator
+
+  the object must have a next() method that returns an objects with two properties
+    value:which gives the current element
+    done:which is a boolean value indicating whether or not there are more elements that could be iterated upon
+
+*/
+
+const obj = {
+  [Symbol.iterator]: function () {
+    let step = 0;
+    const iterator = {
+      next: function () {
+        step++;
+        if (step === 1) {
+          return { value: "hello", done: false };
+        } else if (step === 2) {
+          return { value: "friend", done: false };
+        }
+
+        return { value: undefined, done: true };
+      },
+    };
+    return iterator;
+  },
+};
+
+for(step of obj){
+  console.log(step);
+}
