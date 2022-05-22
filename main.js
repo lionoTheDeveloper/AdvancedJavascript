@@ -262,6 +262,20 @@ const obj = {
   },
 };
 
-for(step of obj){
-  console.log(step);
+// for(step of obj){
+//   console.log(step);
+// }
+
+// Generators another and easier way to implement iterator.
+
+function* generatorFunction(){
+  yield "Hello";
+  yield "World";
+  yield "Whats up!";
+}
+
+const generatorObj = generatorFunction();
+
+for(const item of generatorObj){
+  console.log(item);
 }
